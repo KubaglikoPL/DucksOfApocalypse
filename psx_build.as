@@ -50,20 +50,8 @@ string psx_tools = "D:\\Dev\\PSX\\psn00bsdk\\tools\\bin";
 
 void main() {
   exec('cls');
-  exec('set PATH=%PATH%;' + msys_bin);
-  exec('set PATH=%PATH%;' + msys_mingw_bin);
-  exec('set PATH=%PATH%;' + mipsel_bin);
-  exec('set PATH=%PATH%;' + psx_tools);
-  compileCXX("src/main.cpp", "main.o");
-  compileCXX("src/map.cpp", "map.o");
-  compileCXX("src/game_gui.cpp", "game_gui.o");
-  compileCXX("src/engine/file_loader_psx.cpp", "file_loader_psx.o");
-  compileCXX("src/engine/img.cpp", "img.o");
-  compileCXX("src/engine/render_psx.cpp", "render_psx.o");
-  compileCXX("src/engine/render.cpp", "render.o");
-  compileCXX("src/engine/tar.cpp", "tar.o");
-  compileCXX("src/engine/text.cpp", "text.o");
-  compileCXX("src/engine/input.cpp", "input.o");
-  compileCXX("src/engine/gui.cpp", "gui.o");
+  compileCXX("src/game.cpp", "game.o");
+  compileCXX("src/engine/psx/init.cpp", "init.o");
+  compileCXX("src/engine/psx/graphics.cpp", "graphics.o");
   link();
 }

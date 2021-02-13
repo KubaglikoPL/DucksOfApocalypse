@@ -15,8 +15,10 @@ if(WIN32)
 	include_directories(win32_deps)
 endif(WIN32)
 
-file(GLOB_RECURSE src
-        "src/game.cpp"
+file(GLOB src
+        "src/*.cpp"
+		"src/engine/*.cpp"
+		"src/engine/pc/*.cpp"
 		"src/CXXoverC/*.cpp"
 		"include/*.h"
 		"3rd_party/*cpp"
