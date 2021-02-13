@@ -1,0 +1,19 @@
+extended_font_desktop extended_font_polish.tga 
+extended_font_char 260 0
+extended_font_char 261 1
+extended_font_char 262 2
+extended_font_char 263 3
+extended_font_char 280 4
+extended_font_char 281 5
+extended_font_char 321 6
+extended_font_char 322 7
+extended_font_char 323 8
+extended_font_char 324 9
+extended_font_char 211 10
+extended_font_char 243 11
+extended_font_char 346 12
+extended_font_char 347 13
+extended_font_char 377 14
+extended_font_char 378 15
+extended_font_char 379 16
+extended_font_char 380 17

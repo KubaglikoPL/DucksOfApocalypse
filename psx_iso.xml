@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Defines the ISO project -->
+<iso_project image_name="psx_build/psx_game.iso">
+
+    <!-- Defines the data track for this tutorial -->
+    <track type="data">
+
+        <!-- Specifies identifier strings such as volume label -->
+        <!-- System and application identifiers must be PLAYSTATION -->
+        <identifiers
+            system      ="PLAYSTATION"
+            application ="PLAYSTATION"
+            volume      ="DUCKS_OF_APOCALYPSE"
+            volume_set  ="DUCKS_OF_APOCALYPSE"
+            publisher   ="KUBAGLIKO_PL"
+        />
+
+        <!-- Defines the directory tree of the data track -->
+        <directory_tree>
+			
+            <!-- Specify files in the directory tree -->
+			<file name="system.cnf"      type="data" source="psx_iso.cnf"/>
+            <file name="game.exe"    type="data" source="psx_build/psx_game.exe"/>
+			
+			<dir name="DATA">
+			
+				<file name="FONT.TIM"    type="data" source="images/psx/font.tim"/>
+				<file name="GUI.TIM"    type="data" source="images/psx/gui.tim"/>
+				<file name="SPRT0.TIM"    type="data" source="images/psx/sprite_sheet0.tim"/>
+				<file name="TERRAIN.TIM"    type="data" source="images/psx/terrain.tim"/>
+				
+				<file name="TEST.MAP"    type="data" source="maps/test.map"/>
+			
+			</dir>
+			
+            <!-- Place dummy sectors at the end -->
+            <dummy sectors="1024"/>
+
+        </directory_tree>
+
+    </track>
+
+</iso_project>
