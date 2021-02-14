@@ -6,7 +6,7 @@
 #include <psxgpu.h>
 
 struct image {
-	TIM_IMAGE image;
+	TIM_IMAGE img;
 	uint32_t tPage;
 	RECT crect;
 	uint32_t u_offset;

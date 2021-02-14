@@ -3,6 +3,7 @@
 #include <engine/stdint.h>
 #include <engine/memory.h>
 #include <string.h>
+#include <stdio.h>
 
 template<typename T>
 class dynamicArray {
@@ -33,6 +34,7 @@ public:
 	}
 
 	void add(T item) {
+		//printf("X\n");
 		if ((size + 1) > capacity) {
 			if (capacity == 0) resize(1);
 			else resize(capacity * 2);
@@ -43,6 +45,7 @@ public:
 	}
 
 	uint32_t getSize() {
+		//printf("%i\n", size);
 		return size;
 	}
 
@@ -51,6 +54,7 @@ public:
 	}
 
 	T *get(uint32_t index) {
+		//printf("Z: %i\n", index);
 		if (index < size) {
 			return &data[index];
 		}

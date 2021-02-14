@@ -2,9 +2,9 @@
 #include <engine/memory.h>
 #include <engine/file.h>
 #include <engine/engine.h>
+#include <stdio.h>
 #define STB_IMAGE_IMPLEMENTATION
 #define STBI_NO_HDR
-#define STBI_ONLY_PNG
 #define STBI_NO_STDIO
 #define STBI_NO_LINEAR
 #define STBI_WINDOWS_UTF8
@@ -14,6 +14,9 @@
 
 #define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 240
+#ifdef RGB8_SCREEN_BUFFER
+#define SCREEN_SIZE SCREEN_WIDTH * SCREEN_HEIGHT * 3
+#endif
 
 uint8_t* screenBuffer;
 
@@ -22,10 +25,15 @@ namespace graphics {
 	uint32_t FPS = 60;
 }
 
+void glfwWindowSizeCallback(GLFWwindow *window, int width, int height) {
+	glViewport(0, 0, width, height);
+}
+
 void graphics::init() {
 #ifdef RGB8_SCREEN_BUFFER
 	screenBuffer = (uint8_t*)malloc(SCREEN_WIDTH * SCREEN_HEIGHT * 3);
 #endif
+	glfwSetWindowSizeCallback(window, glfwWindowSizeCallback);
 }
 
 image* graphics::loadImage(const char* filepath) {
@@ -51,16 +59,68 @@ image* graphics::loadImage(const char* filepath) {
 
 GLuint glTexture;
 
+void drawSpriteInstance(graphics::SpriteInstance* instance) {
+	if (instance) {
+		int offsetX = instance->x;
+		int offsetY = instance->y;
+
+		int txOffsetX = instance->u_offset;
+		int txOffsetY = instance->v_offset;
+
+		int txOffset = 0;
+		int bufferOffset = 0;
+
+		unsigned char r = 0, g = 0, b = 0;
+
+		uint8_t* data = instance->img->data;
+
+		for (int y = 0; y < instance->height; y++) {
+			for (int x = 0; x < instance->width; x++) {
+				txOffset = (txOffsetX + (txOffsetY * instance->img->width)) * 3;
+
+				bufferOffset = (offsetX + (offsetY * SCREEN_WIDTH)) * 3;
+
+				if (((txOffset + 2) < SCREEN_SIZE) && (txOffset >= 0)) {
+					r = data[txOffset];
+					g = data[txOffset + 1];
+					b = data[txOffset + 2];
+				}
+
+				if (!((r == 109) && (g == 0) && (b == 85))) {
+					if (((bufferOffset + 2) < SCREEN_SIZE) && (bufferOffset >= 0)) {
+						screenBuffer[bufferOffset] = r;
+						screenBuffer[bufferOffset + 1] = g;
+						screenBuffer[bufferOffset + 2] = b;
+					}
+				}
+
+				txOffsetX++;
+				offsetX++;
+			}
+			txOffsetY++;
+			txOffsetX = instance->u_offset;;
+			offsetY++;
+			offsetX = instance->x;
+		}
+	}
+}
+
 void flush() {
 #ifdef RGB8_SCREEN_BUFFER
 	memset(screenBuffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * 3);
 #endif
+	for (uint32_t i = 0; i < graphics::spriteInstances.getSize(); i++) {
+		drawSpriteInstance(graphics::spriteInstances.get(i));
+	}
 }
 
 void graphics::flush_and_display() {
 	glfwPollEvents(); //TEMP, FIXME!!!!
 
 	graphics::Frames++;
+
+	//printf("%i \n", graphics::Frames);
+
 	flush();
 	if (glTexture == 0) {
 		glEnable(GL_TEXTURE_2D);

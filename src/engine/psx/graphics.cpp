@@ -66,29 +66,29 @@ image* graphics::loadImage(const char* filepath) {
 
 	image* img = new image();
 
-	GetTimInfo((u_int*)fileData, &img->image);
+	GetTimInfo((u_int*)fileData, &img->img);
 
-	LoadImage(img->image.prect, (u_int*)img->image.paddr);
+	LoadImage(img->img.prect, (u_int*)img->img.paddr);
 	DrawSync(0);
 
-	if (img->image.mode & 0x8) {
-		LoadImage(img->image.crect, (u_int*)img->image.caddr);
+	if (img->img.mode & 0x8) {
+		LoadImage(img->img.crect, (u_int*)img->img.caddr);
 		DrawSync(0);
 	}
 
 	int tim_mode;
 	RECT tim_prect, tim_crect;
 
-	tim_prect = *img->image.prect;
-	tim_crect = *img->image.crect;
-	tim_mode = img->image.mode;
+	tim_prect = *img->img.prect;
+	tim_crect = *img->img.crect;
+	tim_mode = img->img.mode;
 
 	img->tPage = getTPage(tim_mode & 0x3, 0, tim_prect.x, tim_prect.y);
 
 	img->u_offset = (tim_prect.x % 64) << (2 - (tim_mode & 0x3));
 	img->v_offset = (tim_prect.y & 0xff);
-	img->width = tim_prect.x << (2 - tim_mode & 0x3);
-	img->height = tim_prect.y;
+	img->width = tim_prect.w << (2 - tim_mode & 0x3);
+	img->height = tim_prect.h;
 	img->crect = tim_crect;
 	img->tim_mode = tim_mode;
 
@@ -97,8 +97,59 @@ image* graphics::loadImage(const char* filepath) {
 	return img;
 }
 
-void flush() {
+void drawSpriteInstance(graphics::SpriteInstance* instance) {
+	//printf("D \n");
+	if (instance) {
+		//printf("C \n");
+		SPRT* sprt = (SPRT*)nextpri;
 
+		/*printf("X: %i\n", instance->x);
+		printf("Y: %i\n", instance->y);
+		printf("W: %i\n", instance->width);
+		printf("H: %i\n", instance->height);*/
+
+		//printf("A\n");
+		setSprt(sprt);
+		setXY0(sprt, instance->x, instance->y);
+		setWH(sprt, instance->width, instance->height);
+		setUV0(sprt, instance->img->u_offset + instance->u_offset, instance->img->v_offset + instance->v_offset);
+		setClut(sprt, instance->img->crect.x, instance->img->crect.y);
+		setRGB0(sprt, 128, 128, 128);
+		addPrim(ot[db], sprt);
+		//printf("B\n");
+
+		nextpri += sizeof(SPRT);
+
+		//printf("%i \n", image->tPage);
+		//if (image->tPage != activeTexPage) {
+			//printf("C\n");
+			DR_TPAGE* tpage;
+			tpage = (DR_TPAGE*)nextpri;
+			setDrawTPage(tpage, 0, 1, instance->img->tPage);
+			addPrim(ot[db], tpage);
+			//activeTexPage = instance->img->tPage;
+			nextpri += sizeof(DR_TPAGE);
+			//printf("D\n");
+		//}
+		//printf("%i\n", nextpri - pribuff[0]);
+	}
+}
+
+void flush() {
+	for (uint32_t i = 0; i < graphics::spriteInstances.getSize(); i++) {
+		//printf("%i \n", i);
+		
+		graphics::SpriteInstance* instance = graphics::spriteInstances.get(((graphics::spriteInstances.getSize() - i)) - 1);
+		//printf("X: %i\n", instance->x);
+		//printf("Y: %i\n", instance->y);
+		//printf("W: %i\n", instance->width);
+		//printf("H: %i\n", instance->height);
+
+		//printf("Z %i \n", i);
+		drawSpriteInstance(instance);
+
+		//drawSpriteInstance(graphics::spriteInstances.get((graphics::spriteInstances.getSize() - i)) - 1);
+	}
 }
 
 void graphics::flush_and_display() {
@@ -107,8 +158,8 @@ void graphics::flush_and_display() {
 	flush();
 
 	//printf("%i \n", Frames);
-	FntPrint(-1, "HELLO WORLD!");
-	FntFlush(-1);
+	//FntPrint(-1, "HELLO WORLD!");
+	//FntFlush(-1);
 
 	DrawSync(0);
 	VSync(0);
