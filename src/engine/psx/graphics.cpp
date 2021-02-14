@@ -17,6 +17,8 @@ char* nextpri;
 namespace graphics {
 	uint32_t Frames = 0;
 	uint32_t FPS = 0;
+	uint32_t screenWidth = 320;
+	uint32_t screenHeight = 240;
 }
 
 void graphics::init() {
@@ -30,6 +32,8 @@ void graphics::init() {
 	}
 	else {
 		//PAL
+		screenHeight = 256;
+
 		SetDefDispEnv(&disp[0], 0, 0, 320, 256);
 		SetDefDispEnv(&disp[1], 0, 256, 320, 256);
 
@@ -98,17 +102,8 @@ image* graphics::loadImage(const char* filepath) {
 }
 
 void drawSpriteInstance(graphics::SpriteInstance* instance) {
-	//printf("D \n");
 	if (instance) {
-		//printf("C \n");
 		SPRT* sprt = (SPRT*)nextpri;
-
-		/*printf("X: %i\n", instance->x);
-		printf("Y: %i\n", instance->y);
-		printf("W: %i\n", instance->width);
-		printf("H: %i\n", instance->height);*/
-
-		//printf("A\n");
 		setSprt(sprt);
 		setXY0(sprt, instance->x, instance->y);
 		setWH(sprt, instance->width, instance->height);
@@ -116,11 +111,9 @@ void drawSpriteInstance(graphics::SpriteInstance* instance) {
 		setClut(sprt, instance->img->crect.x, instance->img->crect.y);
 		setRGB0(sprt, 128, 128, 128);
 		addPrim(ot[db], sprt);
-		//printf("B\n");
 
 		nextpri += sizeof(SPRT);
 
-		//printf("%i \n", image->tPage);
 		//if (image->tPage != activeTexPage) {
 			//printf("C\n");
 			DR_TPAGE* tpage;
@@ -129,26 +122,15 @@ void drawSpriteInstance(graphics::SpriteInstance* instance) {
 			addPrim(ot[db], tpage);
 			//activeTexPage = instance->img->tPage;
 			nextpri += sizeof(DR_TPAGE);
-			//printf("D\n");
 		//}
-		//printf("%i\n", nextpri - pribuff[0]);
 	}
 }
 
 void flush() {
 	for (uint32_t i = 0; i < graphics::spriteInstances.getSize(); i++) {
-		//printf("%i \n", i);
-		
 		graphics::SpriteInstance* instance = graphics::spriteInstances.get(((graphics::spriteInstances.getSize() - i)) - 1);
-		//printf("X: %i\n", instance->x);
-		//printf("Y: %i\n", instance->y);
-		//printf("W: %i\n", instance->width);
-		//printf("H: %i\n", instance->height);
 
-		//printf("Z %i \n", i);
 		drawSpriteInstance(instance);
-
-		//drawSpriteInstance(graphics::spriteInstances.get((graphics::spriteInstances.getSize() - i)) - 1);
 	}
 }
 
@@ -156,10 +138,6 @@ void graphics::flush_and_display() {
 	graphics::Frames++;
 	ClearOTagR(ot[db], PSX_ORDERING_TABLE_SIZE);
 	flush();
-
-	//printf("%i \n", Frames);
-	//FntPrint(-1, "HELLO WORLD!");
-	//FntFlush(-1);
 
 	DrawSync(0);
 	VSync(0);

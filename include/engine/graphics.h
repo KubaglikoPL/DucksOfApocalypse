@@ -16,6 +16,8 @@
 namespace graphics {
 	extern uint32_t Frames;
 	extern uint32_t FPS;
+	extern uint32_t screenWidth;
+	extern uint32_t screenHeight;
 
 	struct SpriteInstance {
 		image* img;

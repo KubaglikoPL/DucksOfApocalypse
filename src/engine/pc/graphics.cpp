@@ -22,7 +22,9 @@ uint8_t* screenBuffer;
 
 namespace graphics {
 	uint32_t Frames = 0;
-	uint32_t FPS = 60;
+	uint32_t FPS = 60; 
+	uint32_t screenWidth = SCREEN_WIDTH;
+	uint32_t screenHeight = SCREEN_HEIGHT;
 }
 
 void glfwWindowSizeCallback(GLFWwindow *window, int width, int height) {
@@ -115,8 +117,6 @@ void flush() {
 }
 
 void graphics::flush_and_display() {
-	glfwPollEvents(); //TEMP, FIXME!!!!
-
 	graphics::Frames++;
 
 	//printf("%i \n", graphics::Frames);

@@ -4,12 +4,16 @@
 #include <CXXoverC/consoleOutput.h>
 #include <engine/engine.h>
 #include <engine/graphics.h>
+#include <engine/input.h>
 
 ConsoleOutput cout;
 
 image* test;
 
 void main_loop();
+
+uint32_t duckX = 0;
+uint32_t duckY = 0;
 
 int main() {
 	/*string s;
@@ -33,11 +37,12 @@ int main() {
 
 	init();
 	graphics::init();
+	input::init();
 
 #ifdef PLATFORM_DESKTOP
-	test = graphics::loadImage("images/font.png");
+	test = graphics::loadImage("images/sprite_sheet0.png");
 #else
-	test = graphics::loadImage("\\DATA\\FONT.TIM;1");
+	test = graphics::loadImage("\\DATA\\SPRT0.TIM;1");
 #endif
 
 	//dynamicArray<int> a;
@@ -59,8 +64,9 @@ int main() {
 }
 
 void main_loop() {
+	input::update();
 	graphics::clearSprites();
-	graphics::drawSprite(test, 0, 0);
+	graphics::drawSprite(test, 16, 16, input::cursorX, input::cursorY);
 
 	graphics::flush_and_display();
 }
