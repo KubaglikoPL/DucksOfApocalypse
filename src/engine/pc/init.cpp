@@ -16,3 +16,7 @@ void init() {
 	glfwSwapInterval(1);
 #endif //GLFW_LIB
 }
+
+bool isGameRunning() {
+	return !glfwWindowShouldClose(window);
+}

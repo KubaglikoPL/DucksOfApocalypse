@@ -8,3 +8,4 @@ extern GLFWwindow* window;
 #endif // GLFW_LIB
 
 void init();
+bool isGameRunning();

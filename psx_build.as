@@ -53,5 +53,6 @@ void main() {
   compileCXX("src/game.cpp", "game.o");
   compileCXX("src/engine/psx/init.cpp", "init.o");
   compileCXX("src/engine/psx/graphics.cpp", "graphics.o");
+  compileCXX("src/engine/psx/file.cpp", "file.o");
   link();
 }

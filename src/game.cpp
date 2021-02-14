@@ -7,6 +7,10 @@
 
 ConsoleOutput cout;
 
+image* test;
+
+void main_loop();
+
 int main() {
 	string s;
 	s.add(123);
@@ -30,5 +34,20 @@ int main() {
 	init();
 	graphics::init();
 
+#ifdef PLATFORM_DESKTOP
+	test = graphics::loadImage("images/font.png");
+#else
+	test = graphics::loadImage("\\DATA\\FONT.TIM;1");
+#endif
+
+	while (isGameRunning()) {
+		main_loop();
+	}
+
 	return 0;
+}
+
+void main_loop() {
+	
+	graphics::flush_and_display();
 }

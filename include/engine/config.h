@@ -15,7 +15,7 @@
 //#endif // defined(__EMSCRIPTEN__)
 
 #if defined(PLATFORM_DESKTOP)
-#define RGB24_SCREEN_BUFFER
+#define RGB8_SCREEN_BUFFER
 #endif // defined(PLATFORM_DESKTOP)
 
 #if defined(PLATFORM_PSX)
