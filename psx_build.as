@@ -9,7 +9,7 @@ string cxx = "mipsel-unknown-elf-g++ ";
 string ld = "mipsel-unknown-elf-ld ";
 
 string cflags = "-g -O2 -fno-builtin -fdata-sections -ffunction-sections -D PSX_BUILD";
-string cppflags = cflags + " -fno-builtin -fno-rtti -fno-exceptions";
+string cppflags = cflags + " -fno-builtin -fno-rtti -fno-exceptions -fno-use-cxa-atexit";
 string linker_flags = "-g -Ttext=0x80010000 -gc-sections -T " + gcc_base + "/mipsel-unknown-elf/lib/ldscripts/elf32elmip.x ";
 
 string out_dir = "psx_build";
@@ -27,7 +27,7 @@ void compileCXX(string inputFile, string outputFile) {
 
 void link() {
   string command = ld + linker_flags + psx_library_dir;
-  for(int i = 0; i < object_files.length(); i++) {
+  for(uint i = 0; i < object_files.length(); i++) {
     command = command + " " + out_dir + "\\" + object_files[i];
   }
   command = command + libraries;
@@ -52,6 +52,8 @@ void main() {
   exec('cls');
   compileCXX("src/game.cpp", "game.o");
   compileCXX("src/engine/graphics.cpp", "graphics.o");
+  compileCXX("src/engine/text.cpp", "text.o");
+  compileCXX("src/engine/gui.cpp", "gui.o");
   compileCXX("src/engine/psx/init.cpp", "init.o");
   compileCXX("src/engine/psx/graphics.cpp", "graphics_psx.o");
   compileCXX("src/engine/psx/file.cpp", "file.o");

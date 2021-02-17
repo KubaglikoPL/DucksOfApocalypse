@@ -28,6 +28,7 @@ void input::update() {
 	//if (padbuff[0][0] == 0)
 	//{
 	//button = *((u_short*)(padbuff[0] + 2));
+	input::keyState = 0;
 	if (!(padData.btn & PAD_UP)) input::keyState |= KEY_UP;
 	if (!(padData.btn & PAD_DOWN)) input::keyState |= KEY_DOWN;
 	if (!(padData.btn & PAD_LEFT)) input::keyState |= KEY_LEFT;
@@ -35,6 +36,8 @@ void input::update() {
 	if (!(padData.btn & PAD_CROSS)) input::keyState |= KEY_ACTION;
 	if (!(padData.btn & PAD_SELECT)) input::keyState |= KEY_SELECT;
 	if (!(padData.btn & PAD_START)) input::keyState |= KEY_START;
+
+	//printf("%i \n", input::keyState);
 	//if (!(padData.btn & PAD_CIRCLE)) input::keyState |= KEY_BACKSPACE;
 	//}
 
@@ -50,17 +53,17 @@ void input::update() {
 	//input::cursorX = cursorX_s;
 	//input::cursorY = cursorY_s;
 
-	printf("X: %i \n", analogX);
-	printf("Y: %i \n", analogY);
+	//printf("X: %i \n", analogX);
+	//printf("Y: %i \n", analogY);
 
 	if (abs(analogX) > 30) {
-		printf("X: %i \n", analogX);
+		//printf("X: %i \n", analogX);
 		input::cursorX = (analogX / 50) + input::cursorX;
 		if (input::cursorX < 0) input::cursorX = 0;
 		//cursorX_s = cursorX;
 	}
 	if (abs(analogY) > 30) {
-		printf("Y: %i \n", analogY);
+		//printf("Y: %i \n", analogY);
 		input::cursorY = (analogY / 50) + input::cursorY;
 		if (input::cursorY < 0) input::cursorY = 0;
 		//cursorY_s = cursorY;

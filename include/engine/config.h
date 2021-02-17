@@ -16,6 +16,7 @@
 
 #if defined(PLATFORM_DESKTOP)
 #define RGB8_SCREEN_BUFFER
+#define NON_COOLDOWNED_KEY_STATE
 #endif // defined(PLATFORM_DESKTOP)
 
 #if defined(PLATFORM_PSX)

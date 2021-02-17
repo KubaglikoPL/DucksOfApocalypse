@@ -25,6 +25,7 @@ namespace graphics {
 	uint32_t FPS = 60; 
 	uint32_t screenWidth = SCREEN_WIDTH;
 	uint32_t screenHeight = SCREEN_HEIGHT;
+	image* font = nullptr;
 }
 
 void glfwWindowSizeCallback(GLFWwindow *window, int width, int height) {
@@ -61,6 +62,7 @@ image* graphics::loadImage(const char* filepath) {
 
 GLuint glTexture;
 
+#pragma optimize("", off)
 void drawSpriteInstance(graphics::SpriteInstance* instance) {
 	if (instance) {
 		int offsetX = instance->x;
@@ -82,11 +84,11 @@ void drawSpriteInstance(graphics::SpriteInstance* instance) {
 
 				bufferOffset = (offsetX + (offsetY * SCREEN_WIDTH)) * 3;
 
-				if (((txOffset + 2) < SCREEN_SIZE) && (txOffset >= 0)) {
+				//if (((txOffset + 2) < (instance->img->width * instance->img->height * 3) && (txOffset >= 0))) {
 					r = data[txOffset];
 					g = data[txOffset + 1];
 					b = data[txOffset + 2];
-				}
+				//}
 
 				if (!((r == 109) && (g == 0) && (b == 85))) {
 					if (((bufferOffset + 2) < SCREEN_SIZE) && (bufferOffset >= 0)) {
@@ -106,6 +108,7 @@ void drawSpriteInstance(graphics::SpriteInstance* instance) {
 		}
 	}
 }
+#pragma optimize("", on)
 
 void flush() {
 #ifdef RGB8_SCREEN_BUFFER

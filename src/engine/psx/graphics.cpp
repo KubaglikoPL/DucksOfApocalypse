@@ -19,6 +19,7 @@ namespace graphics {
 	uint32_t FPS = 0;
 	uint32_t screenWidth = 320;
 	uint32_t screenHeight = 240;
+	image* font = nullptr;
 }
 
 void graphics::init() {
@@ -101,6 +102,8 @@ image* graphics::loadImage(const char* filepath) {
 	return img;
 }
 
+//image* activeImage = nullptr;
+
 void drawSpriteInstance(graphics::SpriteInstance* instance) {
 	if (instance) {
 		SPRT* sprt = (SPRT*)nextpri;
@@ -114,19 +117,20 @@ void drawSpriteInstance(graphics::SpriteInstance* instance) {
 
 		nextpri += sizeof(SPRT);
 
-		//if (image->tPage != activeTexPage) {
+		//if (instance->img != activeImage) {
 			//printf("C\n");
 			DR_TPAGE* tpage;
 			tpage = (DR_TPAGE*)nextpri;
 			setDrawTPage(tpage, 0, 1, instance->img->tPage);
 			addPrim(ot[db], tpage);
-			//activeTexPage = instance->img->tPage;
+			//activeImage = instance->img;
 			nextpri += sizeof(DR_TPAGE);
 		//}
 	}
 }
 
 void flush() {
+	//activeImage = nullptr;
 	for (uint32_t i = 0; i < graphics::spriteInstances.getSize(); i++) {
 		graphics::SpriteInstance* instance = graphics::spriteInstances.get(((graphics::spriteInstances.getSize() - i)) - 1);
 

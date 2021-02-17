@@ -5,8 +5,10 @@
 #include <engine/engine.h>
 #include <engine/graphics.h>
 #include <engine/input.h>
+#include <engine/gui.h>
 
 ConsoleOutput cout;
+gui::VirtualKeyboard virtualKeyboard;
 
 image* test;
 
@@ -41,8 +43,10 @@ int main() {
 
 #ifdef PLATFORM_DESKTOP
 	test = graphics::loadImage("images/sprite_sheet0.png");
+	graphics::font = graphics::loadImage("images/font.png");
 #else
 	test = graphics::loadImage("\\DATA\\SPRT0.TIM;1");
+	graphics::font = graphics::loadImage("\\DATA\\FONT.TIM;1");
 #endif
 
 	//dynamicArray<int> a;
@@ -67,6 +71,9 @@ void main_loop() {
 	input::update();
 	graphics::clearSprites();
 	graphics::drawSprite(test, 16, 16, input::cursorX, input::cursorY);
+	graphics::drawString("AA BB CC!", 0, 24);
+
+	virtualKeyboard.update();
 
 	graphics::flush_and_display();
 }

@@ -18,7 +18,7 @@ void glfwKeyCallback(GLFWwindow* window, int key, int scancode, int action, int 
 		if (key == GLFW_KEY_E) input::keyState |= KEY_SELECT;
 		if (key == GLFW_KEY_ESCAPE) input::keyState |= KEY_START;
 	}
-	printf("%i \n", input::keyState);
+	//printf("%i \n", input::keyState);
 }
 
 void glfwMouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {

@@ -2,6 +2,7 @@
 
 #include <engine/config.h>
 #include <CXXoverC/dynamicArray.h>
+#include <CXXoverC/string.h>
 
 #ifdef PLATFORM_DESKTOP
 #include <engine/pc/graphics.h>
@@ -30,6 +31,7 @@ namespace graphics {
 	};
 
 	extern dynamicArray<SpriteInstance> spriteInstances;
+	extern image* font;
 
 	//Platform Specific
 	void init();
@@ -41,4 +43,9 @@ namespace graphics {
 	void drawSprite(image *img, uint32_t x, uint32_t y);
 	void drawSprite(image* img, uint32_t width, uint32_t height, uint32_t x, uint32_t y);
 	void drawSprite(image* img, uint32_t width, uint32_t height, uint32_t u_offset, uint32_t v_offset, uint32_t x, uint32_t y);
+	
+	void drawString(string str, uint32_t x, uint32_t y);
+	void drawString(const char* str, uint32_t x, uint32_t y);
+	void drawChar(char c, uint32_t x, uint32_t y);
+	void drawChar(uint16_t unicodeCode, uint32_t x, uint32_t y);
 }
