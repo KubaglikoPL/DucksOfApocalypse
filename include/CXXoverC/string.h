@@ -12,7 +12,15 @@ class string {
 public:
 	string() {}
 
+	string(const char* str) {
+		add(str);
+	}
+
 	string(const string& s) {
+		copy(s);
+	}
+
+	void copy(const string& s) {
 		length = s.length;
 		capacity = s.capacity;
 		buffer = (char*)malloc(capacity + 1);

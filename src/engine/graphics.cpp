@@ -50,6 +50,17 @@ void graphics::drawChar(char c, uint32_t x, uint32_t y) {
 	drawChar(static_cast<uint16_t>(c), x, y);
 }
 
+uint32_t graphics::stringWidth(const char* str) {
+	uint32_t i = 0;
+	uint32_t x_offset = 0;
+	uint16_t unicodePoint = 0;
+	while (str[i]) {
+		i += text::utf8Convert(&unicodePoint, str, i);
+		x_offset += 8;
+	}
+	return x_offset;
+}
+
 #pragma optimize("", off)
 void graphics::drawChar(uint16_t unicodeCode, uint32_t x, uint32_t y) {
 	if (unicodeCode < 128) {

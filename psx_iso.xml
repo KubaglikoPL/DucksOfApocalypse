@@ -30,7 +30,7 @@
 				<file name="SPRT0.TIM"    type="data" source="images/psx/sprite_sheet0.tim"/>
 				<file name="TERRAIN.TIM"    type="data" source="images/psx/terrain.tim"/>
 				
-				<!--<file name="TEST.MAP"    type="data" source="maps/test.map"/>-->
+				<file name="TEST1.MAP"    type="data" source="maps/test1.map"/>
 			
 			</dir>
 			

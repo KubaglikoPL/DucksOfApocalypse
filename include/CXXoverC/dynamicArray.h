@@ -40,7 +40,8 @@ public:
 			else resize(capacity * 2);
 		}
 
-		data[size] = item;
+		//data[size] = item;
+		data[size].copy(item);
 		size++;
 	}
 

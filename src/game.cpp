@@ -6,9 +6,11 @@
 #include <engine/graphics.h>
 #include <engine/input.h>
 #include <engine/gui.h>
+#include <engine/map.h>
 
 ConsoleOutput cout;
 gui::VirtualKeyboard virtualKeyboard;
+gui::TextMenu testTextMenu;
 
 image* test;
 
@@ -44,9 +46,17 @@ int main() {
 #ifdef PLATFORM_DESKTOP
 	test = graphics::loadImage("images/sprite_sheet0.png");
 	graphics::font = graphics::loadImage("images/font.png");
+	map::terrainImage = graphics::loadImage("images/terrain.png");
 #else
 	test = graphics::loadImage("\\DATA\\SPRT0.TIM;1");
 	graphics::font = graphics::loadImage("\\DATA\\FONT.TIM;1");
+	map::terrainImage = graphics::loadImage("\\DATA\\TERRAIN.TIM;1");
+#endif
+
+#ifdef PLATFORM_DESKTOP
+	map::loadMap("maps/test1.map");
+#else
+	map::loadMap("\\DATA\\TEST1.MAP;1");
 #endif
 
 	//dynamicArray<int> a;
@@ -60,6 +70,10 @@ int main() {
 	//a.add(15);
 	//printf("%i\n", (*a.get(0)));
 
+	testTextMenu.entries.add(string("1: Test"));
+	testTextMenu.entries.add(string("2: ABC"));
+	testTextMenu.entries.add(string("3: AAAAAAA"));
+
 	while (isGameRunning()) {
 		main_loop();
 	}
@@ -70,10 +84,12 @@ int main() {
 void main_loop() {
 	input::update();
 	graphics::clearSprites();
+	map::drawMap();
 	graphics::drawSprite(test, 16, 16, input::cursorX, input::cursorY);
 	graphics::drawString("AA BB CC!", 0, 24);
 
-	virtualKeyboard.update();
+	//virtualKeyboard.update();
+	testTextMenu.update(160, 40);
 
 	graphics::flush_and_display();
 }

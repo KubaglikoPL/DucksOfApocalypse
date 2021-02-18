@@ -1,5 +1,7 @@
 #pragma once
 
+#include <CXXoverC/dynamicArray.h>
+#include <CXXoverC/string.h>
 #include <engine/stdint.h>
 #include <engine/graphics.h>
 
@@ -18,6 +20,18 @@ namespace gui {
 		char draw();
 	public:
 		char update();
+	};
+
+	class TextMenu {
+		int32_t selectedEntry = 0;
+		uint32_t keyCooldown = 0;
+
+		int32_t drawEntry(uint32_t entryID, uint32_t x, uint32_t y);
+	public:
+		dynamicArray<string> entries;
+		uint32_t getSelectedEntry() { return selectedEntry; }
+
+		int32_t update(uint32_t x, uint32_t y);
 	};
 }
 

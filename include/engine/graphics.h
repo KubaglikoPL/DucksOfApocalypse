@@ -20,7 +20,8 @@ namespace graphics {
 	extern uint32_t screenWidth;
 	extern uint32_t screenHeight;
 
-	struct SpriteInstance {
+	class SpriteInstance {
+	public:
 		image* img;
 		uint32_t width;
 		uint32_t height;
@@ -28,6 +29,16 @@ namespace graphics {
 		uint32_t v_offset;
 		uint32_t x;
 		uint32_t y;
+
+		void copy(const SpriteInstance& i) {
+			img = i.img;
+			width = i.width;
+			height = i.height;
+			u_offset = i.u_offset;
+			v_offset = i.v_offset;
+			x = i.x;
+			y = i.y;
+		}
 	};
 
 	extern dynamicArray<SpriteInstance> spriteInstances;
@@ -48,4 +59,6 @@ namespace graphics {
 	void drawString(const char* str, uint32_t x, uint32_t y);
 	void drawChar(char c, uint32_t x, uint32_t y);
 	void drawChar(uint16_t unicodeCode, uint32_t x, uint32_t y);
+
+	uint32_t stringWidth(const char* str);
 }

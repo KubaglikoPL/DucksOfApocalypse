@@ -75,3 +75,42 @@ char gui::VirtualKeyboard::update() {
 	return 0;
 }
 
+int32_t gui::TextMenu::drawEntry(uint32_t entryID, uint32_t x, uint32_t y) {
+	string* str = entries.get(entryID);
+	if (str) {
+		uint32_t stringWidth = graphics::stringWidth(str->data());
+		uint32_t entryY = y + (entryID * 14);
+		graphics::drawString(str->data(), x - (stringWidth / 2), entryY);
+		if (entryID == selectedEntry) {
+			graphics::drawChar('>', x - (stringWidth / 2) - 8, entryY);
+			graphics::drawChar('<', x + (stringWidth / 2), entryY);
+			return entryID;
+		}
+	}
+	return -1;
+}
+
+int32_t gui::TextMenu::update(uint32_t x, uint32_t y) {
+	int32_t i = -1;
+	for (uint32_t ui = 0; ui < entries.getSize(); ui++) {
+		int32_t i2 = drawEntry(ui, x, y);
+		if (i2 != -1) i = i2;
+	}
+	uint16_t keyState = gui::cooldownedKeyState(keyCooldown);
+	if (keyState & KEY_DOWN) {
+		selectedEntry++;
+		if (selectedEntry >= entries.getSize()) {
+			selectedEntry = 0;
+		}
+	}
+	if (keyState & KEY_UP) {
+		selectedEntry--;
+		if (selectedEntry < 0) {
+			selectedEntry = entries.getSize() - 1;
+		}
+	}
+	if (keyState & KEY_ACTION) {
+		return i;
+	}
+	return -1;
+}
