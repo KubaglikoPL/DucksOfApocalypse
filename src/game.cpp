@@ -4,9 +4,11 @@
 #include <CXXoverC/consoleOutput.h>
 #include <engine/engine.h>
 #include <engine/graphics.h>
+#include <engine/unit.h>
 #include <engine/input.h>
 #include <engine/gui.h>
 #include <engine/map.h>
+#include <engine/data.h>
 
 ConsoleOutput cout;
 gui::VirtualKeyboard virtualKeyboard;
@@ -47,11 +49,16 @@ int main() {
 	test = graphics::loadImage("images/sprite_sheet0.png");
 	graphics::font = graphics::loadImage("images/font.png");
 	map::terrainImage = graphics::loadImage("images/terrain.png");
+	gui::gui_image = graphics::loadImage("images/gui.png");
+	loadData("game_data/texts.ini");
 #else
 	test = graphics::loadImage("\\DATA\\SPRT0.TIM;1");
 	graphics::font = graphics::loadImage("\\DATA\\FONT.TIM;1");
 	map::terrainImage = graphics::loadImage("\\DATA\\TERRAIN.TIM;1");
+	gui::gui_image = graphics::loadImage("\\DATA\\GUI.TIM;1");
 #endif
+
+	units_image = test;
 
 #ifdef PLATFORM_DESKTOP
 	map::loadMap("maps/test1.map");
@@ -85,11 +92,13 @@ void main_loop() {
 	input::update();
 	graphics::clearSprites();
 	map::drawMap();
-	graphics::drawSprite(test, 16, 16, input::cursorX, input::cursorY);
 	graphics::drawString("AA BB CC!", 0, 24);
 
-	//virtualKeyboard.update();
-	testTextMenu.update(160, 40);
+	virtualKeyboard.update();
+	updateUnits();
+	drawUnits();
+	graphics::drawSprite(gui::gui_image, 8, 8, 0, 8, input::cursorX - 4, input::cursorY - 4);
+	//testTextMenu.update(160, 40);
 
 	graphics::flush_and_display();
 }

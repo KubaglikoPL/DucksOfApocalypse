@@ -1,10 +1,12 @@
 #include <engine/map.h>
 #include <engine/file.h>
 #include <engine/memory.h>
+#include <engine/unit.h>
 #include <string.h>
 
 namespace map {
 	map::MapHeader activeMapHeader;
+	map::MapUnitTable activeMapUnitTable;
 	uint8_t* activeMapTileData = nullptr;
 	image* terrainImage = nullptr;
 }
@@ -32,8 +34,31 @@ map::LoadResult map::loadMap(const char* filepath) {
 
 		uint32_t mapTileDataSize = map::activeMapHeader.width * map::activeMapHeader.height;
 		activeMapTileData = (uint8_t*)malloc(mapTileDataSize);
-		memcpy((void*)activeMapTileData, (void*)&fileData[sizeof(map::MapHeader)], mapTileDataSize);
+		uint32_t readCursor = sizeof(map::MapHeader);
+		memcpy((void*)activeMapTileData, (void*)&fileData[readCursor], mapTileDataSize);
+		readCursor += mapTileDataSize;
+
+		printf("%i\n", fileData[readCursor]);
+		activeMapUnitTable.numberOfUnits = ((uint16_t*)fileData)[readCursor / 2];
+		uint32_t unitTableEntriesSize = activeMapUnitTable.numberOfUnits * sizeof(map::MapUnitEntry);
+		if (activeMapUnitTable.entries) free(activeMapUnitTable.entries);
+		activeMapUnitTable.entries = (map::MapUnitEntry*) malloc(unitTableEntriesSize);
+
+		readCursor += 2;
+
+		memcpy((void*)activeMapUnitTable.entries, (void*)&fileData[readCursor], unitTableEntriesSize);
 		free(fileData);
+
+		for (uint32_t i = 0; i < activeMapUnitTable.numberOfUnits; i++) {
+			MapUnitEntry entry = activeMapUnitTable.entries[i];
+			Unit unit;
+			unit.hp = entry.hp;
+			unit.type = entry.type;
+			unit.x = entry.x * 16;
+			unit.y = entry.y * 16;
+			units.add(unit);
+		}
+
 		return map::LoadResult::MAP_LOAD_SUCCESS;
 	}
 }
@@ -45,7 +70,7 @@ void map::drawMap() {
 				uint8_t tile = map::activeMapTileData[x + (y * activeMapHeader.width)];
 				uint32_t texture_tile_row = tile / TERRAIN_TILE_TEXTURES_PER_ROW;
 				uint32_t texture_tile_col = tile % TERRAIN_TILE_TEXTURES_PER_ROW;
-				graphics::drawSprite(map::terrainImage, 16, 16, texture_tile_col * 16, texture_tile_row * 16, x * 16, y * 16);
+				graphics::drawSprite(map::terrainImage, 16, 16, texture_tile_col * 16, texture_tile_row * 16, x * 16, y * 16, false);
 			}
 		}
 	}

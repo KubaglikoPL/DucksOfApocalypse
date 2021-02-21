@@ -9,6 +9,8 @@
 #define VIRTUAL_KEYBOARD_KEYS 10 + 25 + 1
 
 namespace gui {
+	extern image* gui_image;
+
 	uint16_t cooldownedKeyState(uint32_t& cooldown);
 
 	class VirtualKeyboard {

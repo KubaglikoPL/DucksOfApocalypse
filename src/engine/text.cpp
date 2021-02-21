@@ -1,5 +1,17 @@
 #include <engine/text.h>
 
+namespace text {
+	IntMap<string> texts_en;
+	IntMap<string> texts_pl;
+	uint8_t activeLang = LANG_ENGLISH;
+}
+
+string* text::getText(uint32_t textID) {
+	if (activeLang == LANG_ENGLISH) return texts_en.get(textID);
+	else if (activeLang == LANG_POLISH) return texts_pl.get(textID);
+	return nullptr;
+}
+
 uint32_t text::utf8Convert(uint16_t* unicode_point, const char* text, uint32_t position) {
 	unsigned char c0 = text[position];
 	if (c0 & 128) {

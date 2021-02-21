@@ -1,7 +1,7 @@
 <tim_project>
     <properties buffer_res="12" buffer_order="0"/>
     <tim_group name="global">
-        <tim file="gui.tim" source="..\gui.tga">
+        <tim file="gui.tim" source="..\gui.png">
             <import_parameters>
                 <target_bpp>8</target_bpp>
                 <dithering>0</dithering>
@@ -12,7 +12,7 @@
                 <color_key>0x0</color_key>
             </import_parameters>
         </tim>
-        <tim file="sprite_sheet0.tim" source="..\sprite_sheet0.tga">
+        <tim file="sprite_sheet0.tim" source="..\sprite_sheet0.png">
             <import_parameters>
                 <target_bpp>8</target_bpp>
                 <dithering>0</dithering>
@@ -20,10 +20,10 @@
                 <set_color_stp>0</set_color_stp>
                 <set_black_stp>0</set_black_stp>
                 <transparency_mode>2</transparency_mode>
-                <color_key>0x55006d</color_key>
+                <color_key>0x0</color_key>
             </import_parameters>
         </tim>
-        <tim file="terrain.tim" source="..\terrain.tga">
+        <tim file="terrain.tim" source="..\terrain.png">
             <import_parameters>
                 <target_bpp>8</target_bpp>
                 <dithering>0</dithering>
@@ -33,7 +33,7 @@
                 <transparency_mode>0</transparency_mode>
             </import_parameters>
         </tim>
-        <tim file="font.tim" source="..\font.tga">
+        <tim file="font.tim" source="..\font.png">
             <import_parameters>
                 <target_bpp>4</target_bpp>
                 <dithering>0</dithering>

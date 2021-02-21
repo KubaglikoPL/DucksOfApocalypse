@@ -77,35 +77,51 @@ void drawSpriteInstance(graphics::SpriteInstance* instance) {
 		unsigned char r = 0, g = 0, b = 0;
 
 		uint8_t* data = instance->img->data;
+		
+		//if (instance->trasparency) {
+			for (int y = 0; y < instance->height; y++) {
+				for (int x = 0; x < instance->width; x++) {
+					txOffset = (txOffsetX + (txOffsetY * instance->img->width)) * 3;
 
-		for (int y = 0; y < instance->height; y++) {
-			for (int x = 0; x < instance->width; x++) {
+					bufferOffset = (offsetX + (offsetY * SCREEN_WIDTH)) * 3;
+
+					//if (((txOffset + 2) < (instance->img->width * instance->img->height * 3) && (txOffset >= 0))) {
+					r = data[txOffset];
+					g = data[txOffset + 1];
+					b = data[txOffset + 2];
+					//}
+
+					if (!((r == 109) && (g == 0) && (b == 85))) {
+						if (((bufferOffset + 2) < SCREEN_SIZE) && (bufferOffset >= 0)) {
+							screenBuffer[bufferOffset] = r;
+							screenBuffer[bufferOffset + 1] = g;
+							screenBuffer[bufferOffset + 2] = b;
+						}
+					}
+
+					txOffsetX++;
+					offsetX++;
+				}
+				txOffsetY++;
+				txOffsetX = instance->u_offset;;
+				offsetY++;
+				offsetX = instance->x;
+			}
+		//}
+		/*else {
+			for (int y = 0; y < instance->height; y++) {
 				txOffset = (txOffsetX + (txOffsetY * instance->img->width)) * 3;
 
 				bufferOffset = (offsetX + (offsetY * SCREEN_WIDTH)) * 3;
 
-				//if (((txOffset + 2) < (instance->img->width * instance->img->height * 3) && (txOffset >= 0))) {
-					r = data[txOffset];
-					g = data[txOffset + 1];
-					b = data[txOffset + 2];
-				//}
-
-				if (!((r == 109) && (g == 0) && (b == 85))) {
-					if (((bufferOffset + 2) < SCREEN_SIZE) && (bufferOffset >= 0)) {
-						screenBuffer[bufferOffset] = r;
-						screenBuffer[bufferOffset + 1] = g;
-						screenBuffer[bufferOffset + 2] = b;
-					}
-				}
-
-				txOffsetX++;
-				offsetX++;
+				memcpy(&screenBuffer[bufferOffset], &instance->img->data[txOffset], instance->width * 3);
+					
+				txOffsetY++;
+				//txOffsetX = instance->u_offset;;
+				offsetY++;
+				//offsetX = instance->x;
 			}
-			txOffsetY++;
-			txOffsetX = instance->u_offset;;
-			offsetY++;
-			offsetX = instance->x;
-		}
+		}*/
 	}
 }
 #pragma optimize("", on)

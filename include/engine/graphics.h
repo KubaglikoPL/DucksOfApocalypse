@@ -29,6 +29,7 @@ namespace graphics {
 		uint32_t v_offset;
 		uint32_t x;
 		uint32_t y;
+		bool trasparency;
 
 		void copy(const SpriteInstance& i) {
 			img = i.img;
@@ -38,6 +39,7 @@ namespace graphics {
 			v_offset = i.v_offset;
 			x = i.x;
 			y = i.y;
+			trasparency = i.trasparency;
 		}
 	};
 
@@ -51,9 +53,9 @@ namespace graphics {
 
 	//Platform Independent
 	void clearSprites();
-	void drawSprite(image *img, uint32_t x, uint32_t y);
-	void drawSprite(image* img, uint32_t width, uint32_t height, uint32_t x, uint32_t y);
-	void drawSprite(image* img, uint32_t width, uint32_t height, uint32_t u_offset, uint32_t v_offset, uint32_t x, uint32_t y);
+	void drawSprite(image *img, uint32_t x, uint32_t y, bool trasparency = true);
+	void drawSprite(image* img, uint32_t width, uint32_t height, uint32_t x, uint32_t y, bool trasparency = true);
+	void drawSprite(image* img, uint32_t width, uint32_t height, uint32_t u_offset, uint32_t v_offset, uint32_t x, uint32_t y, bool trasparency = true);
 	
 	void drawString(string str, uint32_t x, uint32_t y);
 	void drawString(const char* str, uint32_t x, uint32_t y);

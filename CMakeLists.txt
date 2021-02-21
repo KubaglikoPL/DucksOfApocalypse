@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
-project(GAME CXX)
+project(GAME C CXX)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
@@ -21,7 +21,8 @@ file(GLOB src
 		"src/engine/pc/*.cpp"
 		"src/CXXoverC/*.cpp"
 		"include/*.h"
-		"3rd_party/*cpp"
+		"3rd_party/*.cpp"
+		"3rd_party/*.c"
 		"3rd_party/*.h")
 		
 add_executable(GAME ${src})

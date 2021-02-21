@@ -17,6 +17,10 @@ uint16_t gui::cooldownedKeyState(uint32_t& cooldown) {
 #endif // !NON_COOLDOWNED_KEY_STATE
 }
 
+namespace gui {
+	image* gui_image;
+}
+
 char gui::VirtualKeyboard::drawCharacter(uint32_t index, char code, uint32_t x, uint32_t y) {
 	graphics::drawChar(code, 16 + x * 8, 120 + y * 30);
 	if (index == selectedKey) {

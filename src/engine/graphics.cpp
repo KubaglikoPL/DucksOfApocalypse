@@ -10,15 +10,15 @@ void graphics::clearSprites() {
 	graphics::spriteInstances.clear();
 }
 
-void graphics::drawSprite(image* img, uint32_t x, uint32_t y) {
-	drawSprite(img, img->width, img->height, x, y);
+void graphics::drawSprite(image* img, uint32_t x, uint32_t y, bool trasparency) {
+	drawSprite(img, img->width, img->height, x, y, trasparency);
 }
 
-void graphics::drawSprite(image* img, uint32_t width, uint32_t height, uint32_t x, uint32_t y) {
-	drawSprite(img, width, height, 0, 0, x, y);
+void graphics::drawSprite(image* img, uint32_t width, uint32_t height, uint32_t x, uint32_t y, bool trasparency) {
+	drawSprite(img, width, height, 0, 0, x, y, trasparency);
 }
 
-void graphics::drawSprite(image* img, uint32_t width, uint32_t height, uint32_t u_offset, uint32_t v_offset, uint32_t x, uint32_t y) {
+void graphics::drawSprite(image* img, uint32_t width, uint32_t height, uint32_t u_offset, uint32_t v_offset, uint32_t x, uint32_t y, bool trasparency) {
 	//printf("B \n");
 	SpriteInstance i;
 	i.img = img;
@@ -28,6 +28,7 @@ void graphics::drawSprite(image* img, uint32_t width, uint32_t height, uint32_t 
 	i.v_offset = v_offset;
 	i.x = x;
 	i.y = y;
+	i.trasparency = trasparency;
 	graphics::spriteInstances.add(i);
 }
 

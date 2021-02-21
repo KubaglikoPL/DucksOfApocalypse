@@ -9,6 +9,11 @@ template<typename T>
 struct IntPair {
 	uint32_t key;
 	T item;
+
+	void copy(const IntPair& i) {
+		key = i.key;
+		item.copy(i.item);
+	}
 };
 
 template<typename T>
@@ -26,7 +31,7 @@ public:
 	void add(uint32_t key, T item) {
 		IntPair<T> pair;
 		pair.key = key;
-		pair.item = item;
+		pair.item.copy(item);
 		add(pair);
 	}
 
@@ -35,7 +40,9 @@ public:
 	}
 
 	T* get(uint32_t key) {
-		return items.get(getKeyIndex(key));
+		IntPair<T> *i = items.get(getKeyIndex(key));
+		if (i) return &i->item;
+		else return nullptr;
 	}
 
 	bool erase(uint32_t key) {

@@ -28,7 +28,7 @@ public:
 	}
 
 	~string() {
-		free(buffer);
+		if(buffer) free(buffer);
 	}
 
 	const char* data() { return buffer; }
@@ -93,5 +93,13 @@ public:
 		int str_len = snprintf(buffer, 10, "%u", i);
 		add(buffer, str_len);
 		free(buffer);
+	}
+
+	bool isEqual(const string& s) {
+		return isEqual(s.buffer);
+	}
+
+	bool isEqual(const char* str) {
+		return !strcmp(str, buffer);
 	}
 };
