@@ -7,6 +7,8 @@
 #define GAME_MAP_VERSION 2
 #define TERRAIN_TILE_TEXTURES_PER_ROW 16
 
+#define MAP_COORD(X, Y) X + (Y * map::activeMapHeader.width)
+
 //Map Format(Version 1)
 //-Map Header
 //-Map Tile Data

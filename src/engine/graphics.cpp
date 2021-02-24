@@ -1,5 +1,6 @@
 #include <engine/graphics.h>
 #include <engine/text.h>
+#include <engine/data.h>
 #include <stdio.h>
 
 namespace graphics {
@@ -62,6 +63,14 @@ uint32_t graphics::stringWidth(const char* str) {
 	return x_offset;
 }
 
+void graphics::drawStringCentered(string str, uint32_t x, uint32_t y) {
+	drawStringCentered(str.data(), x, y);
+}
+
+void graphics::drawStringCentered(const char* str, uint32_t x, uint32_t y) {
+	graphics::drawString(str, x - (graphics::stringWidth(str) / 2), y);
+}
+
 #pragma optimize("", off)
 void graphics::drawChar(uint16_t unicodeCode, uint32_t x, uint32_t y) {
 	if (unicodeCode < 128) {
@@ -71,7 +80,15 @@ void graphics::drawChar(uint16_t unicodeCode, uint32_t x, uint32_t y) {
 		graphics::drawSprite(graphics::font, 8, 12, tx_col * 8, tx_row * 12, x, y);
 	}
 	else {
-		//TODO Extended chars
+		ExtendedCharData* d = extendedChars.get(unicodeCode);
+		if (d) {
+			volatile uint32_t tx_row = d->textureY;
+			volatile uint32_t tx_col = d->textureX;
+			graphics::drawSprite(graphics::font, 8, 12, tx_col * 8, tx_row * 12, x, y);
+		}
+		else {
+			drawChar('?', x, y);
+		}
 	}
 }
 #pragma optimize("", on)

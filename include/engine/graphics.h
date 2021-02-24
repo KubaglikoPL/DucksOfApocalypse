@@ -63,4 +63,6 @@ namespace graphics {
 	void drawChar(uint16_t unicodeCode, uint32_t x, uint32_t y);
 
 	uint32_t stringWidth(const char* str);
+	void drawStringCentered(string str, uint32_t x, uint32_t y);
+	void drawStringCentered(const char* str, uint32_t x, uint32_t y);
 }

@@ -1,6 +1,7 @@
 #include <engine/gui.h>
 #include <engine/graphics.h>
 #include <engine/input.h>
+#include <engine/text.h>
 
 uint16_t gui::cooldownedKeyState(uint32_t& cooldown) {
 #ifndef NON_COOLDOWNED_KEY_STATE
@@ -73,7 +74,7 @@ char gui::VirtualKeyboard::update() {
 			selectedKey = VIRTUAL_KEYBOARD_KEYS;
 		}
 	}
-	if (keyState & KEY_ACTION) {
+	if (keyState & KEY_MENU_ACTION) {
 		return c;
 	}
 	return 0;
@@ -103,7 +104,7 @@ int32_t gui::TextMenu::update(uint32_t x, uint32_t y) {
 	uint16_t keyState = gui::cooldownedKeyState(keyCooldown);
 	if (keyState & KEY_DOWN) {
 		selectedEntry++;
-		if (selectedEntry >= entries.getSize()) {
+		if (selectedEntry >= static_cast<int32_t>(entries.getSize())) {
 			selectedEntry = 0;
 		}
 	}
@@ -113,8 +114,51 @@ int32_t gui::TextMenu::update(uint32_t x, uint32_t y) {
 			selectedEntry = entries.getSize() - 1;
 		}
 	}
-	if (keyState & KEY_ACTION) {
+	if (keyState & KEY_MENU_ACTION) {
 		return i;
 	}
 	return -1;
+}
+
+namespace gui {
+	gui::GameGUI activeGUI = gui::GameGUI::MAIN_MENU;
+	bool ingame = false;
+	bool paused = false;
+}
+
+gui::TextMenu mainMenuTextMenu;
+bool mainMenuSetuped = false;
+
+void setupMainMenu() {
+	mainMenuTextMenu.entries.add((*text::getText(TEXT_GUI_NEW_GAME)));
+	mainMenuTextMenu.entries.add((*text::getText(TEXT_GUI_LOAD_GAME)));
+#ifdef MAIN_MENU_HAS_SETTINGS_AND_EXIT
+	mainMenuTextMenu.entries.add((*text::getText(TEXT_GUI_OPTIONS)));
+	mainMenuTextMenu.entries.add((*text::getText(TEXT_GUI_EXIT)));
+#endif
+	mainMenuSetuped = true;
+}
+
+void mainMenuUpdate() {
+	int32_t selected = mainMenuTextMenu.update(graphics::screenWidth / 2, 40);
+	graphics::drawStringCentered((*text::getText(TEXT_GUI_TITLE)), graphics::screenWidth / 2, 10);
+	graphics::drawString((*text::getText(TEXT_GUI_CREDITS)), 8, graphics::screenHeight - 30);
+	graphics::drawString((*text::getText(TEXT_GUI_VERSION)), 8, graphics::screenHeight - 15);
+	if (selected == 0) {
+		gui::activeGUI = gui::GameGUI::NO_GUI;
+		gui::ingame = true;
+		gui::paused = false;
+	}
+#ifdef MAIN_MENU_HAS_SETTINGS_AND_EXIT
+	if (selected == 3) {
+		exit(0);
+	}
+#endif
+}
+
+void gui::guiMain() {
+	if (activeGUI == gui::GameGUI::MAIN_MENU) {
+		if (!mainMenuSetuped) setupMainMenu();
+		mainMenuUpdate();
+	}
 }

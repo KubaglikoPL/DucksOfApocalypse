@@ -79,8 +79,8 @@ void drawSpriteInstance(graphics::SpriteInstance* instance) {
 		uint8_t* data = instance->img->data;
 		
 		//if (instance->trasparency) {
-			for (int y = 0; y < instance->height; y++) {
-				for (int x = 0; x < instance->width; x++) {
+			for (uint32_t y = 0; y < instance->height; y++) {
+				for (uint32_t x = 0; x < instance->width; x++) {
 					txOffset = (txOffsetX + (txOffsetY * instance->img->width)) * 3;
 
 					bufferOffset = (offsetX + (offsetY * SCREEN_WIDTH)) * 3;

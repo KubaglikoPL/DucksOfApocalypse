@@ -56,6 +56,7 @@ map::LoadResult map::loadMap(const char* filepath) {
 			unit.type = entry.type;
 			unit.x = entry.x * 16;
 			unit.y = entry.y * 16;
+			unit.data = unitsData.get(unit.type);
 			units.add(unit);
 		}
 

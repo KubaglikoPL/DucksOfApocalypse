@@ -11,6 +11,7 @@ https://github.com/benhoyt/inih
 
 */
 
+#include <engine/config.h>
 #include <stdbool.h>
 
 #ifdef PLATFORM_PSX

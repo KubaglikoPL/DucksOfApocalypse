@@ -33,7 +33,10 @@ void input::update() {
 	if (!(padData.btn & PAD_DOWN)) input::keyState |= KEY_DOWN;
 	if (!(padData.btn & PAD_LEFT)) input::keyState |= KEY_LEFT;
 	if (!(padData.btn & PAD_RIGHT)) input::keyState |= KEY_RIGHT;
-	if (!(padData.btn & PAD_CROSS)) input::keyState |= KEY_ACTION;
+	if (!(padData.btn & PAD_CROSS)) {
+		input::keyState |= KEY_ACTION;
+		input::keyState |= KEY_MENU_ACTION;
+	}
 	if (!(padData.btn & PAD_SELECT)) input::keyState |= KEY_SELECT;
 	if (!(padData.btn & PAD_START)) input::keyState |= KEY_START;
 

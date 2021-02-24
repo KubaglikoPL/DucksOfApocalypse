@@ -9,6 +9,7 @@
 #define KEY_START 16 //Escape on PC
 #define KEY_SELECT 32 //E on PC
 #define KEY_ACTION 64 //Left Mouse Button on PC
+#define KEY_MENU_ACTION 128 //Enter on PC
 
 namespace input {
 	void init();

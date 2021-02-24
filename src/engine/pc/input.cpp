@@ -14,7 +14,7 @@ void glfwKeyCallback(GLFWwindow* window, int key, int scancode, int action, int 
 		if ((key == GLFW_KEY_DOWN) || (key == GLFW_KEY_S)) input::keyState |= KEY_DOWN;
 		if ((key == GLFW_KEY_LEFT) || (key == GLFW_KEY_A)) input::keyState |= KEY_LEFT;
 		if ((key == GLFW_KEY_RIGHT) || (key == GLFW_KEY_D)) input::keyState |= KEY_RIGHT;
-		if (key == GLFW_KEY_ENTER) input::keyState |= KEY_ACTION;
+		if (key == GLFW_KEY_ENTER) input::keyState |= KEY_MENU_ACTION;
 		if (key == GLFW_KEY_E) input::keyState |= KEY_SELECT;
 		if (key == GLFW_KEY_ESCAPE) input::keyState |= KEY_START;
 	}

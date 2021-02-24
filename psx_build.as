@@ -56,6 +56,7 @@ void main() {
   compileCXX("src/engine/gui.cpp", "gui.o");
   compileCXX("src/engine/unit.cpp", "unit.o");
   compileCXX("src/engine/map.cpp", "map.o");
+  compileCXX("src/engine/astar.cpp", "astar.o");
   compileCXX("src/engine/psx/init.cpp", "init.o");
   compileCXX("src/engine/psx/graphics.cpp", "graphics_psx.o");
   compileCXX("src/engine/psx/file.cpp", "file.o");

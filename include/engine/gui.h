@@ -35,5 +35,16 @@ namespace gui {
 
 		int32_t update(uint32_t x, uint32_t y);
 	};
+
+	enum class GameGUI {
+		NO_GUI,
+		MAIN_MENU
+	};
+
+	extern GameGUI activeGUI;
+	extern bool ingame;
+	extern bool paused;
+
+	void guiMain();
 }
 

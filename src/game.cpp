@@ -9,6 +9,7 @@
 #include <engine/gui.h>
 #include <engine/map.h>
 #include <engine/data.h>
+#include <engine/astar.h>
 
 ConsoleOutput cout;
 gui::VirtualKeyboard virtualKeyboard;
@@ -20,6 +21,8 @@ void main_loop();
 
 uint32_t duckX = 0;
 uint32_t duckY = 0;
+
+Path p;
 
 int main() {
 	/*string s;
@@ -51,6 +54,8 @@ int main() {
 	map::terrainImage = graphics::loadImage("images/terrain.png");
 	gui::gui_image = graphics::loadImage("images/gui.png");
 	loadData("game_data/texts.ini");
+	loadData("game_data/units.ini");
+	loadData("game_data/font.ini");
 #else
 	test = graphics::loadImage("\\DATA\\SPRT0.TIM;1");
 	graphics::font = graphics::loadImage("\\DATA\\FONT.TIM;1");
@@ -91,14 +96,18 @@ int main() {
 void main_loop() {
 	input::update();
 	graphics::clearSprites();
-	map::drawMap();
-	graphics::drawString("AA BB CC!", 0, 24);
-
-	virtualKeyboard.update();
-	updateUnits();
-	drawUnits();
-	graphics::drawSprite(gui::gui_image, 8, 8, 0, 8, input::cursorX - 4, input::cursorY - 4);
+	if (gui::ingame) {
+		map::drawMap();
+		drawUnits();
+		graphics::drawSprite(gui::gui_image, 8, 8, 0, 8, input::cursorX - 4, input::cursorY - 4);
+		//graphics::drawString("AA BB CC!", 0, 24);
+	}
+	if ((!gui::paused) && gui::ingame) {
+		updateUnits();
+	}
+	//virtualKeyboard.update();
 	//testTextMenu.update(160, 40);
+	gui::guiMain();
 
 	graphics::flush_and_display();
 }
