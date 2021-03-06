@@ -6,10 +6,17 @@ namespace text {
 	uint8_t activeLang = LANG_ENGLISH;
 }
 
+string s;
+
 string* text::getText(uint32_t textID) {
 	if (activeLang == LANG_ENGLISH) return texts_en.get(textID);
 	else if (activeLang == LANG_POLISH) return texts_pl.get(textID);
-	return nullptr;
+	else {
+		s.clear();
+		s.add("TEXT_");
+		s.add(textID);
+		return &s;
+	}
 }
 
 uint32_t text::utf8Convert(uint16_t* unicode_point, const char* text, uint32_t position) {

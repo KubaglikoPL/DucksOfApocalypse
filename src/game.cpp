@@ -61,6 +61,9 @@ int main() {
 	graphics::font = graphics::loadImage("\\DATA\\FONT.TIM;1");
 	map::terrainImage = graphics::loadImage("\\DATA\\TERRAIN.TIM;1");
 	gui::gui_image = graphics::loadImage("\\DATA\\GUI.TIM;1");
+	loadData("\\DATA\\TEXTS.INI;1");
+	loadData("\\DATA\\UNITS.INI;1");
+	loadData("\\DATA\\FONT.INI;1");
 #endif
 
 	units_image = test;

@@ -13,6 +13,7 @@ class Unit {
 public:
 	uint8_t type = 0;
 	uint8_t hp = 0;
+	uint8_t move = 0;
 	uint16_t x = 0;
 	uint16_t y = 0;
 	UnitData* data = NULL;
@@ -21,6 +22,7 @@ public:
 	void copy(const Unit& unit) {
 		type = unit.type;
 		hp = unit.hp;
+		move = unit.move;
 		x = unit.x;
 		y = unit.y;
 		selected = unit.selected;

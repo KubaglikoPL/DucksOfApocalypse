@@ -36,6 +36,7 @@ int ini_parse(void* user, const char* section, const char* name, const char* val
 			unitsData.add(activeUnitID, UnitData{});
 		}
 		if (!strcmp(name, "name")) unitsData.get(activeUnitID)->textID = atoi(value);
+		if (!strcmp(name, "move")) unitsData.get(activeUnitID)->move = atoi(value);
 		if (!strcmp(name, "maxHP")) unitsData.get(activeUnitID)->maxHP = atoi(value);
 		if (!strcmp(name, "attackType")) unitsData.get(activeUnitID)->attackType = atoi(value);
 		if (!strcmp(name, "minAttack")) unitsData.get(activeUnitID)->minAttack = atoi(value);

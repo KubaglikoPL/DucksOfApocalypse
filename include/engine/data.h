@@ -9,6 +9,7 @@
 struct UnitData {
 	uint32_t textID;
 	uint8_t maxHP;
+	uint8_t move;
 	uint8_t attackType;
 	uint8_t minAttack;
 	uint8_t maxAttack;
@@ -21,6 +22,7 @@ struct UnitData {
 	void copy(const UnitData& d) {
 		textID = d.textID;
 		maxHP = d.maxHP;
+		move = d.move;
 		attackType = d.attackType;
 		minAttack = d.minAttack;
 		maxAttack = d.maxAttack;

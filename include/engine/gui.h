@@ -38,13 +38,21 @@ namespace gui {
 
 	enum class GameGUI {
 		NO_GUI,
-		MAIN_MENU
+		MAIN_MENU,
+		INGAME_GUI
+	};
+
+	enum class GameSubGUI {
+		NO_GUI,
+		SELECTED_UNIT_GUI
 	};
 
 	extern GameGUI activeGUI;
+	extern GameSubGUI activeSubGUI;
 	extern bool ingame;
 	extern bool paused;
 
+	void guiBox(uint32_t x, uint32_t y, uint32_t width, uint32_t height);
 	void guiMain();
 }
 

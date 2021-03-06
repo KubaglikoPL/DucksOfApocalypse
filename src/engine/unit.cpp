@@ -6,6 +6,7 @@
 
 dynamicArray<Unit> units;
 image* units_image = nullptr;
+Unit* selectedUnit = nullptr;
 
 void drawUnits() {
 	if (units_image) {
@@ -57,9 +58,11 @@ void updateUnits() {
 		graphics::drawSprite(gui::gui_image, 16, 16, 16, 16, cursor_tile_x * 16, cursor_tile_y * 16);
 	}
 
+	selectedUnit = nullptr;
 	for (uint32_t i = 0; i < units.getSize(); i++) {
 		Unit* unit = units.get(i);
 		if (unit->selected) {
+			selectedUnit = unit;
 			uint32_t unit_tile_x = unit->x / 16;
 			uint32_t unit_tile_y = unit->y / 16;
 			uint32_t cursor_tile_x = input::cursorX / 16;
