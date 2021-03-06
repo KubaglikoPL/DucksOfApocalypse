@@ -69,9 +69,9 @@ int main() {
 	units_image = test;
 
 #ifdef PLATFORM_DESKTOP
-	map::loadMap("maps/test1.map");
+	map::loadMap("maps/test_big.map");
 #else
-	map::loadMap("\\DATA\\TEST1.MAP;1");
+	map::loadMap("\\DATA\\TESTBIG.MAP;1");
 #endif
 
 	//dynamicArray<int> a;

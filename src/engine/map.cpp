@@ -65,14 +65,31 @@ map::LoadResult map::loadMap(const char* filepath) {
 	}
 }
 
+//dummy for test
+uint32_t cameraX = 0;
+uint32_t cameraY = 0;
+
 void map::drawMap() {
 	if (activeMapTileData) {
+		uint32_t camera_tile_pos_x = cameraX / 16;
+		uint32_t camera_tile_pos_y = cameraY / 16;
+
+		int32_t camera_minX = camera_tile_pos_x - 1;
+		int32_t camera_minY = camera_tile_pos_y - 1;
+
+		int32_t camera_maxX = (camera_tile_pos_x + (graphics::screenWidth / 16)) + 1;
+		int32_t camera_maxY = (camera_tile_pos_y + (graphics::screenHeight / 16)) + 1;
+
 		for (uint32_t y = 0; y < activeMapHeader.height; y++) {
 			for (uint32_t x = 0; x < activeMapHeader.width; x++) {
-				uint8_t tile = map::activeMapTileData[x + (y * activeMapHeader.width)];
-				uint32_t texture_tile_row = tile / TERRAIN_TILE_TEXTURES_PER_ROW;
-				uint32_t texture_tile_col = tile % TERRAIN_TILE_TEXTURES_PER_ROW;
-				graphics::drawSprite(map::terrainImage, 16, 16, texture_tile_col * 16, texture_tile_row * 16, x * 16, y * 16, false);
+				int32_t iy = static_cast<int32_t>(y);
+				int32_t ix = static_cast<int32_t>(x);
+				if ((iy < camera_maxY) && (iy > camera_minY) && (ix < camera_maxX) && (ix > camera_minX)) {
+					uint8_t tile = map::activeMapTileData[x + (y * activeMapHeader.width)];
+					uint32_t texture_tile_row = tile / TERRAIN_TILE_TEXTURES_PER_ROW;
+					uint32_t texture_tile_col = tile % TERRAIN_TILE_TEXTURES_PER_ROW;
+					graphics::drawSprite(map::terrainImage, 16, 16, texture_tile_col * 16, texture_tile_row * 16, x * 16, y * 16, false);
+				}
 			}
 		}
 	}
